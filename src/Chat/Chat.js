@@ -38,6 +38,19 @@ class Chat extends Component {
         messages: state.messages.concat(newMessage),
       };
     });
+    const returnMessage = answersData.find((answer) => {
+      const result = answer.tags.map((item) => message.includes(item));
+      return result.includes(true);
+    });
+    if (returnMessage) {
+      setTimeout(() => {
+        this.setState((state) => {
+          return {
+            messages: state.messages.concat(returnMessage),
+          };
+        });
+      }, 1000);
+    }
   };
 
   render() {
