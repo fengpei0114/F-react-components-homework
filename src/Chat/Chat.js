@@ -5,6 +5,7 @@ import ChatBox from './ChatBox/ChatBox';
 import ChatInput from './ChatInput/ChatInput';
 import shopData from '../data/shop.json';
 import answersData from '../data/answers.json';
+import { ROLE } from '../constants';
 
 class Chat extends Component {
   constructor(props, context) {
@@ -27,13 +28,25 @@ class Chat extends Component {
     }, 1000);
   }
 
+  addMessage = (message) => {
+    const newMessage = {
+      text: message,
+      role: ROLE.CUSTOMER,
+    };
+    this.setState((state) => {
+      return {
+        messages: state.messages.concat(newMessage),
+      };
+    });
+  };
+
   render() {
     const { shop, messages } = this.state;
     return (
       <main className="Chat">
         <ChatHeader shop={shop} />
         <ChatBox messages={messages} />
-        <ChatInput />
+        <ChatInput addMessage={this.addMessage} />
       </main>
     );
   }
